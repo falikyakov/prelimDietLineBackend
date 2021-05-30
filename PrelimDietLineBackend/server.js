@@ -7,8 +7,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const port = 5990;
 app.listen(port, console.log(`listening on port ${port}`));
+
 app.get('/', (req, res) => {
-    res.send("Home Page");
+    res.sendFile(__dirname+ '/public/tutorials.html');
 })
 
 const router = require('./router');

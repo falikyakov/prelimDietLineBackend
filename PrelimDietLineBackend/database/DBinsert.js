@@ -31,7 +31,7 @@ router.post('/insertUser', (req, res) => {
             const newDietPlan = new mongo.DietPlan({
                 userId: userResult._id,
                 userEmail: userResult.Email,
-                goals:[],
+                goals: [],
                 dailyPlanInput: [],
                 weeklyPlanInput: [],
                 dailyActualInput: [],
@@ -53,7 +53,6 @@ router.post('/insertUser', (req, res) => {
 
 
 router.post('/insertGoal', (req, res) => {
-    console.log("Hello goals")
     try {
         const insertGoal = async (userId) => {
             console.log('Hi Goal');
@@ -61,33 +60,39 @@ router.post('/insertGoal', (req, res) => {
             userId = req.body.userId;
 
             const goals = {
-                loseKg : req.body.kgToLose,
-                excersize_minutes : req.body.excersizePlanned,
-                calorieIntake : req.body.caloriesToLose
+                loseKgForWeek: req.body.kgToLose,
+                excersize_minutes_per_day: req.body.excersizePlanned,
+                calorieIntakePerDay: req.body.caloriesToLose,
+                weekStartDate: req.body.weekStartDate
             }
-            
+
             // const user = await mongo.DietPlan.findOne({ userId: userId });
             // if (!user) return
             // user.set({
             //     goals:goals
             // })
-            console.log(goals);
+            //console.log(goals);
+
+            console.log("goalArray: " + goals.calorieIntake);
+            console.log(req.body.kgToLose,
+                req.body.excersizePlanned,
+                req.body.caloriesToLose,
+                req.body.weekStartDate
+            )
 
             mongo.DietPlan.updateOne(
-                { userId:userId },
-                { $push: { goals: [goals] } },
+                { userId: userId },
+                { $push: { goals: goals } },
                 function (err, result) {
                     if (err) {
                         res.send(err);
                         console.log(err)
                     } else {
                         res.send(result);
+                        console.log(userId + " " + result);
                     }
                 }
             );
-
-          
-          
         };
         insertGoal();
     }
@@ -96,6 +101,46 @@ router.post('/insertGoal', (req, res) => {
     }
 })
 
+router.post('/insertDailyPlan', (req, res) => {
+    try {
+        const insertDailyPlan = async (userId) => {
+            console.log('Hi insert daily plan');
 
+            userId = req.body.userId;
+
+            const dailyPlanInput = {
+                breakfast: req.body.breakfast,
+                lunch: req.body.lunch,
+                dinner: req.body.dinner,
+                excersizeMinutesDaily: req.body.excersizeMinutesDaily,
+                totalCal: req.body.totalCalories,
+                day: req.body.day
+            }
+
+            console.log("dailyPlanInput: " + dailyPlanInput.breakfast.foods);
+
+            mongo.DietPlan.updateOne(
+                { userId: userId },
+                { $push: { dailyPlanInput: dailyPlanInput } },
+                function (err, result) {
+                    if (err) {  
+                        res.send(err);
+                        console.log(err)
+                    } else {
+                        res.send(result);
+                        console.log(userId + " " + result);
+                    }
+                }
+            );
+
+
+
+        };
+        insertDailyPlan();
+    }
+    catch (error) {
+        console.error(error);
+    }
+})
 
 module.exports = router;

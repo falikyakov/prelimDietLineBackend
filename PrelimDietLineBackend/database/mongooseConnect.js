@@ -70,14 +70,14 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    DailyInput: {
-        type: [{}],
-        required: false
-    },
-    WeeklyInput: {
-        type: [{}],
-        required: false
-    },
+    // DailyInput: {
+    //     type: [{}],
+    //     required: false
+    // },
+    // WeeklyInput: {
+    //     type: [{}],
+    //     required: false
+    // },
     EntryDate: {
         type: Date,
         default: Date.now
@@ -86,17 +86,21 @@ const userSchema = mongoose.Schema({
 
 
 const goalSchema = mongoose.Schema({
-    loseKg: {
+    loseKgForWeek: {
         type: Number,
-        required:false
+        required: false
     },
-    excersize_minutes: {
-        type: Number,
-        required:true
-    },
-    calorieIntake: {
+    excersize_minutes_per_day: {
         type: Number,
         required: true
+    },
+    calorieIntakePerDay: {
+        type: Number,
+        required: true
+    },
+    weekStartDate: {
+        type: Date,
+        requied: true
     }
 })
 
@@ -104,30 +108,40 @@ const goalSchema = mongoose.Schema({
 const dailySchema = mongoose.Schema({
     breakfast: {
         foods: [],
+        //foodCalories matches up with foods through index of array
+        foodAmount:[],
         calories: {
             type: Number,
             required: true
         },
-        carbohydrates: Number,
-        proteins: Number
     },
     lunch: {
         foods: [],
+        foodAmount: [],
         calories: {
             type: Number,
             required: true
         },
-        carbohydrates: Number,
-        proteins: Number
     },
     dinner: {
         foods: [],
+        foodAmount: [],
         calories: {
             type: Number,
             required: true
         },
-        carbohydrates: Number,
-        proteins: Number
+    },
+    totalCal: {
+        type: Number,
+        required: false
+    },
+    excersizeMinutesDaily: {
+        type: Number,
+        required: true
+    },
+    day: {
+        type: Date,
+        default: Date.now
     }
 });
 
@@ -137,8 +151,10 @@ const weeklySchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    totalPlannedCarbs: Number,
-    totalPlannedProtein: Number
+    weekStart: {
+        type: Date,
+        requied: true
+    }
 });
 
 
