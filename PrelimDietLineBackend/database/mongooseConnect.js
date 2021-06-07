@@ -142,6 +142,10 @@ const dailySchema = mongoose.Schema({
     day: {
         type: Date,
         default: Date.now
+    },
+    weekOf: {
+        type: Date,
+        required: true
     }
 });
 
@@ -156,6 +160,22 @@ const weeklySchema = mongoose.Schema({
         requied: true
     }
 });
+
+
+const weeklyActualSchema = mongoose.Schema({
+    weekStart: {
+        type: Date,
+        requied: true
+    },
+    weightLostKg: {
+        type: Number,
+        required: true
+    },
+    avgCalories: {
+        type: Number,
+        required: true
+    }
+})
 
 
 const dietPlanSchema = mongoose.Schema({

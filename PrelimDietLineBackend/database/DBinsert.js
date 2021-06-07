@@ -114,7 +114,8 @@ router.post('/insertDailyPlan', (req, res) => {
                 dinner: req.body.dinner,
                 excersizeMinutesDaily: req.body.excersizeMinutesDaily,
                 totalCal: req.body.totalCalories,
-                day: req.body.day
+                day: req.body.day,
+                weekOf:req.body.weekOf
             }
 
             console.log("dailyPlanInput: " + dailyPlanInput.breakfast.foods);
@@ -142,5 +143,51 @@ router.post('/insertDailyPlan', (req, res) => {
         console.error(error);
     }
 })
+
+
+router.post('/insertDailyActual', (req, res) => {
+    try {
+        const insertDailyActual= async (userId) => {
+            console.log('Hi insert daily actual');
+
+            userId = req.body.userId;
+
+            const dailyPlanActual = {
+                breakfast: req.body.breakfast,
+                lunch: req.body.lunch,
+                dinner: req.body.dinner,
+                excersizeMinutesDaily: req.body.excersizeMinutesDaily,
+                totalCal: req.body.totalCalories,
+                day: req.body.day
+            }
+
+            console.log("dailyPlanActual: " + dailyPlanActual.breakfast);
+
+            mongo.DietPlan.updateOne(
+                { userId: userId },
+                { $push: { dailyActualInput: dailyPlanActual } },
+                function (err, result) {
+                    if (err) {
+                        res.send(err);
+                        console.log(err)
+                    } else {
+                        res.send(result);
+                        console.log(userId + " " + result);
+                    }
+                }
+            );
+
+
+
+        };
+        insertDailyActual();
+    }
+    catch (error) {
+        console.error(error);
+    }
+})
+
+
+
 
 module.exports = router;
