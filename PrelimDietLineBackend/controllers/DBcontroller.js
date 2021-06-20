@@ -29,5 +29,8 @@ router.post('/login', (req, res) => {
 const DBinsert = require('../database/DBinsert');
 router.use('/DBinsert', DBinsert);
 
+const DBupdateUser = require('../database/DBupdateUser');
+router.use('/DBupdateUser', DBupdateUser);
+
 module.exports = router;
 

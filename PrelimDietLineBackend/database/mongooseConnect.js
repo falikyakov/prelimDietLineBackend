@@ -50,6 +50,10 @@ const userSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    LoseKgGoal: {
+        type: Number,
+        required: true
+    },
     WeeklyWeight: {
         type: [],
         required: false
@@ -59,6 +63,10 @@ const userSchema = mongoose.Schema({
         required: true
     },
     BMI: {
+        type: Number,
+        required: false
+    },
+    IdealWeight: {
         type: Number,
         required: false
     },

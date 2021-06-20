@@ -13,6 +13,7 @@ router.post('/insertUser', (req, res) => {
             const ht = req.body.height / 100;
             const htsq = ht * ht;
             const bmi = kg / htsq;
+            const idealWeight = htsq * 25;
 
             const newUser = new mongo.User({
                 FirstName: req.body.firstName,
@@ -20,8 +21,10 @@ router.post('/insertUser', (req, res) => {
                 DateOfBirth: req.body.dob,
                 HeightCM: req.body.height,
                 StartWeightKG: req.body.weight,
+                LoseKgGoal:req.body.loseKgGoal,
                 Gender: req.body.gender,
                 BMI: bmi,
+                IdealWeight:idealWeight,
                 Email: req.body.email,
                 Password: req.body.password
             })
@@ -115,7 +118,7 @@ router.post('/insertDailyPlan', (req, res) => {
                 excersizeMinutesDaily: req.body.excersizeMinutesDaily,
                 totalCal: req.body.totalCalories,
                 day: req.body.day,
-                weekOf:req.body.weekOf
+                weekOf: req.body.weekOf
             }
 
             console.log("dailyPlanInput: " + dailyPlanInput.breakfast.foods);
@@ -124,7 +127,7 @@ router.post('/insertDailyPlan', (req, res) => {
                 { userId: userId },
                 { $push: { dailyPlanInput: dailyPlanInput } },
                 function (err, result) {
-                    if (err) {  
+                    if (err) {
                         res.send(err);
                         console.log(err)
                     } else {
@@ -147,7 +150,7 @@ router.post('/insertDailyPlan', (req, res) => {
 
 router.post('/insertDailyActual', (req, res) => {
     try {
-        const insertDailyActual= async (userId) => {
+        const insertDailyActual = async (userId) => {
             console.log('Hi insert daily actual');
 
             userId = req.body.userId;
