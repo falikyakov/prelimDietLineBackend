@@ -1,7 +1,9 @@
+
 const mongoose = require('mongoose');
 require('mongoose-type-email');
 
-mongoose.connect("mongodb+srv://falikyakovj:falik2020@cluster0.qon1w.mongodb.net/DietLinePre?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
+//"mongodb+srv://falikyakovj:falik2020@cluster0.qon1w.mongodb.net/DietLinePre?retryWrites=true&w=majority"
+mongoose.connect(process.env.DB_CONN, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('connected to MongoDB'))
     .catch((err) => console.log('failed to connect.... \n' + err));
 
