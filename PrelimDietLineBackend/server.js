@@ -6,7 +6,11 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const port = process.env.PORT || 5990;
+
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 5990;
+}
 app.listen(port, console.log(`listening on port ${port}`));
  
 
